@@ -3,6 +3,7 @@ import {
   BrowserRouter as Router,
   Switch as Swticher,
   Route,
+  Link,
 } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./store/configureStore";
@@ -14,6 +15,10 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Switch from "@material-ui/core/Switch";
 import Container from "@material-ui/core/Container";
+import Badge from "@material-ui/core/Badge";
+import LocalMallOutlinedIcon from "@material-ui/icons/LocalMallOutlined";
+import IconButton from "@material-ui/core/IconButton";
+import HomeOutlinedIcon from "@material-ui/icons/HomeOutlined";
 import {
   orange,
   lightBlue,
@@ -56,6 +61,7 @@ const useStyles = makeStyles((theme) => ({
   },
   title: {
     flexGrow: 1,
+    fontWeight: "bold",
   },
   appBarSpacer: theme.mixins.toolbar,
   content: {
@@ -75,6 +81,9 @@ const useStyles = makeStyles((theme) => ({
   },
   fixedHeight: {
     height: 240,
+  },
+  link: {
+    textDecoration: "none",
   },
 }));
 
@@ -103,27 +112,46 @@ function App() {
   return (
     <Provider store={store}>
       <ThemeProvider theme={darkTheme}>
-        <div className={classes.root}>
-          <CssBaseline />
-          <AppBar
-            position="absolute"
-            className={clsx(classes.appBar && classes.appBarShift)}
-          >
-            <Toolbar>
-              <Typography
-                component="h1"
-                variant="h6"
-                color="inherit"
-                noWrap
-                className={classes.title}
-              >
-                Tem Tudo
-              </Typography>
-              <Switch checked={darkState} onChange={handleThemeChange} />
-            </Toolbar>
-          </AppBar>
-          <Container maxWidth="lg" className={classes.container}>
-            <Router>
+        <Router>
+          <div className={classes.root}>
+            <CssBaseline />
+            <AppBar
+              position="absolute"
+              className={clsx(classes.appBar && classes.appBarShift)}
+            >
+              <Toolbar>
+                <Link to="/" style={{ textDecoration: "none", color: "unset" }}>
+                  <IconButton
+                    edge="start"
+                    color="inherit"
+                    aria-label="open drawer"
+                  >
+                    <HomeOutlinedIcon />
+                  </IconButton>
+                </Link>
+                <Typography
+                  component="h1"
+                  variant="h6"
+                  color="inherit"
+                  noWrap
+                  className={classes.title}
+                >
+                  TEM TUDO
+                </Typography>
+                <Switch checked={darkState} onChange={handleThemeChange} />
+                <Link
+                  to="/cart"
+                  style={{ textDecoration: "none", color: "unset" }}
+                >
+                  <IconButton color="inherit">
+                    <Badge badgeContent={4} color="secondary">
+                      <LocalMallOutlinedIcon />
+                    </Badge>
+                  </IconButton>
+                </Link>
+              </Toolbar>
+            </AppBar>
+            <Container maxWidth="lg" className={classes.container}>
               <Swticher>
                 <Route exact path="/">
                   <Home />
@@ -132,9 +160,9 @@ function App() {
                   <Cart />
                 </Route>
               </Swticher>
-            </Router>
-          </Container>
-        </div>
+            </Container>
+          </div>
+        </Router>
       </ThemeProvider>
     </Provider>
   );
