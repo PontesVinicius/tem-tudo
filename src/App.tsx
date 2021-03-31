@@ -4,6 +4,8 @@ import {
   Switch as Swticher,
   Route,
 } from "react-router-dom";
+import { Provider } from "react-redux";
+import store from "./store/configureStore";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { makeStyles } from "@material-ui/core/styles";
@@ -99,40 +101,42 @@ function App() {
   };
 
   return (
-    <ThemeProvider theme={darkTheme}>
-      <div className={classes.root}>
-        <CssBaseline />
-        <AppBar
-          position="absolute"
-          className={clsx(classes.appBar && classes.appBarShift)}
-        >
-          <Toolbar>
-            <Typography
-              component="h1"
-              variant="h6"
-              color="inherit"
-              noWrap
-              className={classes.title}
-            >
-              Tem Tudo
-            </Typography>
-            <Switch checked={darkState} onChange={handleThemeChange} />
-          </Toolbar>
-        </AppBar>
-        <Container maxWidth="lg" className={classes.container}>
-          <Router>
-            <Swticher>
-              <Route exact path="/">
-                <Home />
-              </Route>
-              <Route path="/cart">
-                <Cart />
-              </Route>
-            </Swticher>
-          </Router>
-        </Container>
-      </div>
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={darkTheme}>
+        <div className={classes.root}>
+          <CssBaseline />
+          <AppBar
+            position="absolute"
+            className={clsx(classes.appBar && classes.appBarShift)}
+          >
+            <Toolbar>
+              <Typography
+                component="h1"
+                variant="h6"
+                color="inherit"
+                noWrap
+                className={classes.title}
+              >
+                Tem Tudo
+              </Typography>
+              <Switch checked={darkState} onChange={handleThemeChange} />
+            </Toolbar>
+          </AppBar>
+          <Container maxWidth="lg" className={classes.container}>
+            <Router>
+              <Swticher>
+                <Route exact path="/">
+                  <Home />
+                </Route>
+                <Route path="/cart">
+                  <Cart />
+                </Route>
+              </Swticher>
+            </Router>
+          </Container>
+        </div>
+      </ThemeProvider>
+    </Provider>
   );
 }
 
