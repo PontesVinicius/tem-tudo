@@ -1,4 +1,6 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../../store/ducks/cartProducts";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -21,6 +23,7 @@ const useStyles = makeStyles({
 
 export type ProductCardProps = {
   props: {
+    id: string;
     name: string;
     description: string;
     photo_url: string;
@@ -30,6 +33,15 @@ export type ProductCardProps = {
 
 const ProductCard: React.FC<ProductCardProps> = ({ props }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  const add = () => {
+    const item = {
+      ...props,
+      quantity: 1,
+    };
+    dispatch(addToCart(item));
+  };
 
   return (
     <Grid item xs={12} md={5} lg={5}>
@@ -53,7 +65,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ props }) => {
           </CardContent>
         </CardActionArea>
         <CardActions>
-          <Button size="small" color="primary">
+          <Button onClick={add} size="small" color="primary">
             Adicionar ao carrinho
           </Button>
         </CardActions>

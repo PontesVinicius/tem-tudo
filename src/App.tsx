@@ -144,7 +144,7 @@ function App() {
                   style={{ textDecoration: "none", color: "unset" }}
                 >
                   <IconButton color="inherit">
-                    <Badge badgeContent={4} color="secondary">
+                    <Badge color="secondary">
                       <LocalMallOutlinedIcon />
                     </Badge>
                   </IconButton>
